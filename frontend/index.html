@@ -1,5 +1,3 @@
-{{ $data := or (index .Site.Data .Site.Language.Lang).content .Site.Data.content }}
-{{ .Scratch.Set "data" $data }}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,16 +34,20 @@
             font-weight: bold;
             color: #0070f3;
         }
+
+        .loading {
+            color: #666;
+            font-size: 1rem;
+        }
     </style>
 </head>
 
 <body>
-    {{ partial "_skills.html" $data }}
-    {{ partial "_languages.html" $data }}
-    {{ partial "_diplomas.html" $data }}
-    {{ partial "_interests.html" $data }}
+    <div class="counter-card">
+        <h1>Visitor Count</h1>
+        <div id="counter" class="count">...</div>
     </div>
-    </div>
+    <script src="script.js"></script>
 </body>
 
 </html>
