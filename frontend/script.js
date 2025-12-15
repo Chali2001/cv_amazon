@@ -1,5 +1,5 @@
 // URL de tu API Gateway (hardcoded por ahora, idealmente vendría de env vars en build time)
-const API_URL = "https://86y7byy6gb.execute-api.us-east-1.amazonaws.com/prod/";
+const API_URL = "https://rpnelr4l46.execute-api.us-east-1.amazonaws.com/prod/";
 
 async function updateCounter() {
     const counterElement = document.getElementById("counter");
