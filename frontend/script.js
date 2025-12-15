@@ -5,12 +5,9 @@ async function updateCounter() {
     const counterElement = document.getElementById("counter");
 
     try {
-        // Hacemos POST para incrementar y obtener el nuevo valor
+        // Hacemos POST para incrementar (Simple Request para evitar CORS preflight)
         const response = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            }
+            method: "POST"
         });
 
         if (!response.ok) throw new Error("API Error");
