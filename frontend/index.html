@@ -4,49 +4,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Resume Challenge - Visit Counter</title>
+    <title>Resume | Cloud Resume Challenge</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f2f5;
-            margin: 0;
+        :root {
+            --primary-color: #2d3e50;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
         }
 
-        .counter-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            background: var(--primary-color);
+            color: white;
+            padding: 40px 20px;
             text-align: center;
         }
 
-        h1 {
-            margin: 0 0 1rem 0;
-            color: #1a1a1a;
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            margin-bottom: 20px;
+            object-fit: cover;
+            background-color: #ddd;
+            /* Placeholder color */
         }
 
-        .count {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #0070f3;
+        .name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
-        .loading {
+        .title {
+            font-size: 16px;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-info {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .contact-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .contact-item i {
+            width: 25px;
+            color: var(--accent-color);
+            margin-right: 10px;
+        }
+
+        .skills-section h3 {
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            margin: 0 5px 10px 0;
+            border-radius: 4px;
+            display: inline-block;
+            font-size: 13px;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 22px;
+            font-weight: 700;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .job-item {
+            margin-bottom: 30px;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        .job-title {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary-color);
+        }
+
+        .company {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .date {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .job-desc ul {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+
+        /* Cloud Resume Footer - Counter */
+        .footer {
+            grid-column: 1 / -1;
+            background: #f1f1f1;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e1e1e1;
+            font-size: 14px;
             color: #666;
-            font-size: 1rem;
+        }
+
+        .visitor-count {
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: var(--accent-color);
+            background: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                text-align: center;
+            }
+
+            .contact-info {
+                text-align: center;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="counter-card">
-        <h1>Visitor Count</h1>
-        <div id="counter" class="count">...</div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- <img src="profile.jpg" alt="Profile" class="profile-img"> -->
+            <div class="profile-img" style="display:flex;align-items:center;justify-content:center;color:#666;">
+                <i class="fas fa-user fa-3x"></i>
+            </div>
+
+            <h1 class="name">Your Name</h1>
+            <div class="title">Cloud Engineer</div>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i> email@example.com
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i> +1 234 567 890
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i> City, Country
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-linkedin"></i> linkedin.com/in/you
+                </div>
+            </div>
+
+            <div class="skills-section">
+                <h3>Skills</h3>
+                <span class="skill-tag">AWS</span>
+                <span class="skill-tag">Terraform</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">CI/CD</span>
+                <span class="skill-tag">Linux</span>
+                <span class="skill-tag">Docker</span>
+                <span class="skill-tag">Git</span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <section class="section">
+                <h2 class="section-title">Profile</h2>
+                <p>
+                    Passionate Cloud Engineer with a strong foundation in AWS and Infrastructure as Code.
+                    Proven ability to deploy scalable and secure serverless architectures.
+                    Dedicated to continuous learning and automation.
+                </p>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Experience</h2>
+
+                <div class="job-item">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">Cloud Engineer</div>
+                            <div class="company">Tech Company Inc.</div>
+                        </div>
+                        <div class="date">Jan 2024 - Present</div>
+                    </div>
+                    <div class="job-desc">
+                        <ul>
+                            <li>Designed and deployed serverless applications using AWS Lambda and API Gateway.</li>
+                            <li>Implemented CI/CD pipelines with GitHub Actions reducing deployment time by 40%.</li>
+                            <li>Managed infrastructure using Terraform to ensure consistency across environments.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="job-item">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">Junior Developer</div>
+                            <div class="company">StartUp Hub</div>
+                        </div>
+                        <div class="date">Jun 2022 - Dec 2023</div>
+                    </div>
+                    <div class="job-desc">
+                        <ul>
+                            <li>Developed RESTful APIs using Python and Flask.</li>
+                            <li>Collaborated with frontend teams to integrate user-facing features.</li>
+                            <li>Participated in daily stand-ups and agile sprint planning.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Education</h2>
+                <div class="job-item">
+                    <div class="job-header">
+                        <div class="job-title">Bachelor of Science in Computer Science</div>
+                        <div class="date">2018 - 2022</div>
+                    </div>
+                    <div class="company">University of Technology</div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Certifications</h2>
+                <ul style="padding-left: 20px;">
+                    <li>AWS Certified Solutions Architect - Associate</li>
+                    <li>AWS Certified Cloud Practitioner</li>
+                </ul>
+            </section>
+        </main>
+
+        <!-- Footer with Counter -->
+        <footer class="footer">
+            <p>Built with AWS Lambda, API Gateway, DynamoDB & Terraform</p>
+            <div class="visitor-count">
+                Visitor # <span id="counter"><i class="fas fa-spinner fa-spin"></i></span>
+            </div>
+        </footer>
     </div>
+
+    <!-- Script to connect to API -->
     <script src="script.js"></script>
 </body>
 
